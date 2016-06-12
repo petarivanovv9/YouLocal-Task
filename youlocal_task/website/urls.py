@@ -3,7 +3,7 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 admin.autodiscover()
 
-from website import urls as website_urls
+from .views import index
 
 
 urlpatterns = patterns('',
@@ -11,7 +11,5 @@ urlpatterns = patterns('',
     # url(r'^$', 'youlocal_task.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
 
-    url(r'^admin/', include(admin.site.urls)),
-
-    url(r'', include(website_urls)),
+    url(r'^$', index, name='index'),
 )

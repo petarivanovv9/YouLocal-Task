@@ -36,6 +36,11 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'djangotoolbox',
+    #'django_mongodb_engine',
+
+    'website',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -56,13 +61,29 @@ WSGI_APPLICATION = 'youlocal_task.wsgi.application'
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
 DATABASES = {
-    'default': {
+    'default' : {
         'ENGINE' : 'django_mongodb_engine',
-        'NAME' : 'my_database'
-        #'ENGINE': 'django.db.backends.sqlite3',
-        #'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME' : 'mydb',
+
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': '',
+        'PORT': '',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE' : 'django_mongodb_engine',
+#         'NAME' : os.path.join(BASE_DIR, 'my_db'),
+#         # 'USER': '',
+#         # 'PASSWORD': '',
+#         # 'HOST': '',
+#         # 'PORT': '',
+#         #'ENGINE': 'django.db.backends.sqlite3',
+#         #'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
