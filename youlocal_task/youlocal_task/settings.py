@@ -38,7 +38,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     'djangotoolbox',
-    #'django_mongodb_engine',
 
     'website',
 )
