@@ -96,3 +96,5 @@ db.sqlite3
 
 # Ipython Notebook
 .ipynb_checkpoints
+
+local_settings.py
