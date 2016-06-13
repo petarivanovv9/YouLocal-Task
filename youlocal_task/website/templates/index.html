@@ -1,8 +1,36 @@
-<p>
-    Hello dude
-</p>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
 
+        <meta http-equiv="content-type" content="text/html;charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Petar Ivanov</title>
 
-<p>
-    Raw venues
-</p>
+        <style>
+            #single-venue {
+                background-color:green;
+                color:white;
+                text-align:center;
+            }
+        </style>
+
+    </head>
+
+<body>
+
+    <h2 align="center"> Venues </h2>
+
+    {% for venue in venues %}
+        <div id="single-venue">
+            <p>Name: {{ venue.name }}</p>
+            <p>Address: {{ venue.address }}</p>
+            <p>Primary category:</p>
+            <p>Distance: {{ venue.distance }}</p>
+        </div>
+        <br />
+    {% endfor %}
+
+</body>
+
+</html>
