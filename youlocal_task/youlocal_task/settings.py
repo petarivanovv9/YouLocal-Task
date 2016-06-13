@@ -87,7 +87,11 @@ DATABASES = {
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'bg'
+
+USE_I18N = True
+
+USE_L10N = True
 
 TIME_ZONE = 'Europe/Istanbul'
 
@@ -96,6 +100,8 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+LANGUAGES = (('bg', 'Bulgarian'),)
 
 
 # Static files (CSS, JavaScript, Images)
