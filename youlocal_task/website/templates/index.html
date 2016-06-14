@@ -1,23 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
+{% extends 'base.html' %}
 
-        <meta http-equiv="content-type" content="text/html;charset=UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Petar Ivanov</title>
-
-        <style>
-            #single-venue {
-                background-color:green;
-                color:white;
-                text-align:center;
-            }
-        </style>
-
-    </head>
-
-<body>
+{% block content %}
 
     <h2 align="center"> Venues </h2>
 
@@ -37,6 +20,4 @@
         <center> <input type="submit" value="Save to database"/> </center>
     </form>
 
-</body>
-
-</html>
+{% endblock %}
