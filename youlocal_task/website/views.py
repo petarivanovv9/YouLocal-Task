@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, redirect, HttpResponse
 
 from local_settings import *
 import requests
@@ -12,6 +12,31 @@ def index(request):
     return render(request, 'index.html', locals())
 
 
+def save_venues(request):
+    #print(request.POST.items())
+    print('blqblqblq')
+    # print(request.POST.values())
+    print('blqblqblq')
+    print(request.POST.lists())
+    print(request.POST.lists()[-1][-1])
+    print('da mu ebesh')
+    for i, j in enumerate(request.POST.lists()[-1][-1]):
+        print i
+        print j
+        print 30 * '-'
+    # print(request.POST.lists()[-1][-1][])
+    # print(request.POST.lists()[-1][-1])
+
+    print('blqblqblq')
+    # print(request.POST.dict())
+
+    #print(dir(request.POST['venues[]']))
+    # print(request.POST.get('venues[]'))
+    # print(request.POST.get('venues[]'))
+    print('qsha')
+
+    return redirect('index')
+
 def __get_venues():
     api_request = URL + LL + RADIOUS + INTENT + CLIENT_ID + CLIENT_SECRET + V + LIMIT
     info = requests.get(api_request).json()
@@ -21,6 +46,7 @@ def __get_venues():
 
     for item in venues:
         try:
+            id = item['id']
             name = item['name']
             address = item['location']['address']
             # primary_category = None
@@ -28,12 +54,13 @@ def __get_venues():
         except:
             print("There no such fields!")
 
-        print(name + ' -- ' + address + ' -- ' + str(distance))
+        print(id + ' -- ' + name + ' -- ' + address + ' -- ' + str(distance))
 
         venue = {}
-        venue['name'] = name.encode('utf-8')
+        venue['id'] = id
+        venue['name'] = name
         venue['address'] = address
-        venue['distance'] = str(distance)
+        venue['distance'] = distance
 
         formated_venus.append(venue)
 

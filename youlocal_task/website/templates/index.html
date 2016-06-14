@@ -21,15 +21,21 @@
 
     <h2 align="center"> Venues </h2>
 
-    {% for venue in venues %}
-        <div id="single-venue">
-            <p>Name: {{ venue.name }}</p>
-            <p>Address: {{ venue.address }}</p>
-            <p>Primary category:</p>
-            <p>Distance: {{ venue.distance }}</p>
-        </div>
-        <br />
-    {% endfor %}
+    <form method="POST" action="{% url 'save_venues' %}">
+        {% csrf_token %}
+        {% for venue in venues %}
+            <div id="single-venue">
+                <p>ID: {{ venue.id }} </p>
+                <p>Name: {{ venue.name }} </p>
+                <p>Address: {{ venue.address }} </p>
+                <p>Primary category: </p>
+                <p>Distance: {{ venue.distance }} </p>
+                <input type="checkbox" name="venues[]" value="{{ venue.id }}">
+            </div>
+            <br />
+        {% endfor %}
+        <center> <input type="submit" value="Save to database"/> </center>
+    </form>
 
 </body>
 

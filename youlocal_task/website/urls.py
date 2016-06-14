@@ -3,7 +3,7 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 admin.autodiscover()
 
-from .views import index
+from .views import index, save_venues
 
 
 urlpatterns = patterns('',
@@ -12,4 +12,5 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^$', index, name='index'),
+    url(r'^save/$', save_venues, name='save_venues'),
 )
