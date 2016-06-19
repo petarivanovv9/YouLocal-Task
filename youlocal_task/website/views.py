@@ -6,34 +6,35 @@ import datetime
 
 from pymongo import MongoClient
 
+
 client = MongoClient()
 db = client.mydb
 
 
 def index(request):
     venues = __get_venues_in_radius()
-    #print db.collection_names(include_system_collections=False)
+    # print db.collection_names(include_system_collections=False)
     print db.venues.count()
     return render(request, 'index.html', locals())
 
 
 def save_venues(request):
     venues = db.venues
-    print(request.POST.lists())
-    print(request.POST.lists()[-1][-1])
-
+    # print(request.POST.lists())
+    # print(request.POST.lists()[-1][-1])
     for i in request.POST.lists()[-1][-1]:
         try:
-            print 'qshaaa'
+            # print 'qshaaa'
             venue = __get_venue_by_id(i)
-            print 'opaa'
+            # print 'opaa'
             venue['_id'] = venue['id']
             patka = {'_id': venue['id']}
             del venue['id']
             venue['date'] = datetime.datetime.utcnow()
-            print venue
-            venue_id = venues.update(patka, venue, upsert=True)
-            print venue_id
+            #print venue
+            venues.update(patka, venue, upsert=True)
+            # venue_id = venues.update(patka, venue, upsert=True)
+            # print venue_id
         except:
             continue
 
@@ -58,7 +59,6 @@ def __get_venues_in_radius():
         except Exception as exc:
             address = ''
             # print("There no such fields!")
-
         venue = {}
         venue['id'] = id
         venue['name'] = name
@@ -75,7 +75,6 @@ def __get_venue_by_id(id_venue):
     api_request = URL + id_venue + '?' + CLIENT_ID + '&' + CLIENT_SECRET + V + '&' + LL
     info = requests.get(api_request).json()
     if requests.get(api_request).status_code != 200:
-        print 'GRESHKAAA'
         return None
     raw_venue = info['response']['venue']
     try:
