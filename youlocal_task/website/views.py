@@ -13,23 +13,15 @@ def index(request):
 
 
 def save_venues(request):
-    #print(request.POST.items())
-    print('blqblqblq')
-    # print(request.POST.values())
-    print('blqblqblq')
-    print(request.POST.lists())
+    #print(request.POST.lists())
     print(request.POST.lists()[-1][-1])
-    print('da mu ebesh')
+    #print('da mu ebesh')
     for i, j in enumerate(request.POST.lists()[-1][-1]):
-        print i
-        print j
-        print 30 * '-'
-        print __get_venue_by_id(j)
-        print __get_venue_by_id(j)['name']
-    # print(request.POST.lists()[-1][-1][])
-    # print(request.POST.lists()[-1][-1])
-
-    print('qsha')
+        try:
+            print __get_venue_by_id(j)
+            #print __get_venue_by_id(j)['name']
+        except:
+            continue
 
     return redirect('index')
 
@@ -51,7 +43,7 @@ def __get_venues_in_radius():
         except:
             print("There no such fields!")
 
-        print(id + ' -- ' + name + ' -- ' + address + ' -- ' + str(distance))
+        #print(id + ' -- ' + name + ' -- ' + address + ' -- ' + str(distance))
 
         venue = {}
         venue['id'] = id
@@ -66,14 +58,10 @@ def __get_venues_in_radius():
 
 def __get_venue_by_id(id_venue):
     api_request = URL + id_venue + '?' + CLIENT_ID + '&' + CLIENT_SECRET + V + '&' + LL
-
-    print api_request
-
     info = requests.get(api_request).json()
     if requests.get(api_request).status_code != 200:
         return None
     raw_venue = info['response']['venue']
-
     try:
         id = raw_venue['id']
         name = raw_venue['name']
@@ -82,9 +70,7 @@ def __get_venue_by_id(id_venue):
         distance = raw_venue['location']['distance']
     except:
         print("There no such fields!")
-
-    print(id + ' -- ' + name + ' -- ' + address + ' -- ' + str(distance))
-
+    #print(id + ' -- ' + name + ' -- ' + address + ' -- ' + str(distance))
     venue = {}
     venue['id'] = id
     venue['name'] = name
