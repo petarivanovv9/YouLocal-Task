@@ -63,7 +63,7 @@ def __get_venues_in_radius():
             id = item['id']
             name = item['name']
             address = item['location']['address']
-            # primary_category = None
+            primary_category = item['categories'][0]['primary']
             distance = item['location']['distance']
         except:
             print("There no such fields!")
@@ -74,6 +74,7 @@ def __get_venues_in_radius():
         venue['id'] = id
         venue['name'] = name
         venue['address'] = address
+        venue['primary_category'] = primary_category
         venue['distance'] = distance
 
         formated_venues.append(venue)
@@ -91,7 +92,7 @@ def __get_venue_by_id(id_venue):
         id = raw_venue['id']
         name = raw_venue['name']
         address = raw_venue['location']['address']
-        # primary_category = None
+        primary_category = raw_venue['categories'][0]['primary']
         distance = raw_venue['location']['distance']
     except:
         print("There no such fields!")
@@ -100,6 +101,7 @@ def __get_venue_by_id(id_venue):
     venue['id'] = id
     venue['name'] = name
     venue['address'] = address
+    venue['primary_category'] = primary_category
     venue['distance'] = distance
 
     return venue
