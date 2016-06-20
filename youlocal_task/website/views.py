@@ -35,17 +35,12 @@ def save_venues(request):
     # print(request.POST.lists()[-1][-1])
     for i in request.POST.lists()[-1][-1]:
         try:
-            # print 'qshaaa'
             venue = __get_venue_by_id(i)
-            # print 'opaa'
             venue['_id'] = venue['id']
-            patka = {'_id': venue['id']}
+            new_venue_id = {'_id': venue['id']}
             del venue['id']
             venue['date'] = str(datetime.datetime.utcnow())
-            #print venue
-            venues.update(patka, venue, upsert=True)
-            # venue_id = venues.update(patka, venue, upsert=True)
-            # print venue_id
+            venues.update(new_venue_id, venue, upsert=True)
         except:
             continue
 
@@ -112,7 +107,7 @@ def __get_venue_by_id(id_venue):
 
 @api_view(['GET'])
 def get_venues_in_5km_desc(request):
-    raw_venues = db.venues.find({'distance' : {'$lt': 500}}).sort([
+    raw_venues = db.venues.find({'distance' : {'$lt': 5000}}).sort([
         ('distance', DESCENDING),
     ])
     venues = []
