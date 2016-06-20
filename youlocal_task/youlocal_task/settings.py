@@ -39,6 +39,8 @@ INSTALLED_APPS = (
 
     'djangotoolbox',
 
+    'rest_framework',
+
     'website',
 )
 

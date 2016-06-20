@@ -6,6 +6,9 @@ import datetime
 
 from pymongo import MongoClient
 
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
 # from .tasks import generate_save_all_venues_in_5km
 
 
@@ -103,3 +106,16 @@ def __get_venue_by_id(id_venue):
     venue['distance'] = distance
 
     return venue
+
+
+@api_view(['GET'])
+def get_venues_in_5km_desc(request):
+    # venues = db.raw_query({'distance' : {'$near : 5000'}})
+    # print venues
+
+    data = {
+        'test': {
+            'user': 'ASANNNN',
+        },
+    }
+    return Response(data, status=status.HTTP_200_OK)
