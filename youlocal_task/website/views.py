@@ -4,12 +4,14 @@ from local_settings import *
 import requests
 import datetime
 
-from pymongo import MongoClient
+from pymongo import MongoClient, DESCENDING
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 # from .tasks import generate_save_all_venues_in_5km
+
+import json
 
 
 client = MongoClient()
@@ -39,7 +41,7 @@ def save_venues(request):
             venue['_id'] = venue['id']
             patka = {'_id': venue['id']}
             del venue['id']
-            venue['date'] = datetime.datetime.utcnow()
+            venue['date'] = str(datetime.datetime.utcnow())
             #print venue
             venues.update(patka, venue, upsert=True)
             # venue_id = venues.update(patka, venue, upsert=True)
@@ -110,12 +112,13 @@ def __get_venue_by_id(id_venue):
 
 @api_view(['GET'])
 def get_venues_in_5km_desc(request):
-    # venues = db.raw_query({'distance' : {'$near : 5000'}})
-    # print venues
-
+    raw_venues = db.venues.find({'distance' : {'$lt': 500}}).sort([
+        ('distance', DESCENDING),
+    ])
+    venues = []
+    for i in raw_venues:
+        venues.append(i)
     data = {
-        'test': {
-            'user': 'ASANNNN',
-        },
+        'venues': venues,
     }
     return Response(data, status=status.HTTP_200_OK)
