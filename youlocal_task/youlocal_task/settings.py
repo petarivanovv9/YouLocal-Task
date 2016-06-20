@@ -71,18 +71,12 @@ DATABASES = {
     }
 }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE' : 'django_mongodb_engine',
-#         'NAME' : os.path.join(BASE_DIR, 'my_db'),
-#         # 'USER': '',
-#         # 'PASSWORD': '',
-#         # 'HOST': '',
-#         # 'PORT': '',
-#         #'ENGINE': 'django.db.backends.sqlite3',
-#         #'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
+# BROKER_URL = 'mongodb://localhost:8000/mydb'
+# CELERY_RESULT_BACKEND = 'mongodb://localhost:8000'
+# CELERY_ACCEPT_CONTENT = ['application/json']
+# CELERY_TASK_SERIALIZER = 'json'
+# CELERY_RESULT_SERIALIZER = 'json'
+# CELERY_TIMEZONE = 'Europe/Istanbul'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/

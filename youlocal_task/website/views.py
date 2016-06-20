@@ -6,6 +6,8 @@ import datetime
 
 from pymongo import MongoClient
 
+# from .tasks import generate_save_all_venues_in_5km
+
 
 client = MongoClient()
 db = client.mydb
@@ -19,6 +21,10 @@ def index(request):
 
 
 def save_venues(request):
+    # generate_save_all_venues_in_5km.delay()
+
+    # print generate_save_all_venues_in_5km.delay().get()
+
     venues = db.venues
     # print(request.POST.lists())
     # print(request.POST.lists()[-1][-1])
@@ -38,6 +44,8 @@ def save_venues(request):
         except:
             continue
 
+    # b = generate_save_all_venues_in_5km.AsyncResult(a)
+    # b.get()
 
     return redirect('index')
 
