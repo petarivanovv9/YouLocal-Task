@@ -4,6 +4,7 @@ billiard==3.3.0.23
 celery==3.1.23
 Django==1.6.11
 django-mongodb-engine==0.6.0
+djangorestframework==3.1.0
 djangotoolbox==1.8.0
 kombu==3.0.35
 pymongo==2.8
