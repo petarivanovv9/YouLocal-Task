@@ -11,7 +11,11 @@ from rest_framework.response import Response
 from rest_framework import status
 # from .tasks import generate_save_all_venues_in_5km
 
+from .models import Venue
+
 import json
+
+from .serializers import VenueSerializer
 
 
 client = MongoClient()
@@ -21,16 +25,24 @@ db = client.mydb
 def index(request):
     venues = __get_venues_in_radius()
     # print db.collection_names(include_system_collections=False)
-    print db.venues.count()
+    #print db.venues.count()
+    #print db
+
+    print len(Venue.objects.all())
+
+
+    #print Venue.objects.all()
+    #print Venue.objects.all()[0].id
+    #print Venue.objects.all()[1].id
+
+    #serializer_v = VenueSerializer(Venue.objects.all()[0])
+    #print serializer_v
+
     return render(request, 'index.html', locals())
 
 
 def save_venues(request):
-    # generate_save_all_venues_in_5km.delay()
-
-    # print generate_save_all_venues_in_5km.delay().get()
-
-    venues = db.venues
+    # venues = db.venues
     # print(request.POST.lists())
     # print(request.POST.lists()[-1][-1])
     for i in request.POST.lists()[-1][-1]:
@@ -39,10 +51,36 @@ def save_venues(request):
             venue['_id'] = venue['id']
             new_venue_id = {'_id': venue['id']}
             del venue['id']
-            venue['date'] = str(datetime.datetime.utcnow())
-            venues.update(new_venue_id, venue, upsert=True)
-        except:
-            continue
+
+            #serializer_v = VenueSerializer(venue)
+            #print serializer_v
+            #serializer_v.save()
+
+            print 'hohohooh'
+            print len(Venue.objects.all())
+
+            Venue.objects.create(
+                _id = venue['_id'],
+                name = venue['name'],
+                contact = venue['contact'],
+                location = venue['location'],
+                categories = venue['categories'],
+                verified = venue['verified'],
+                date = datetime.datetime.utcnow(),
+            ).save(force_insert=True)
+            # baba.save()
+
+            print len(Venue.objects.all())
+
+
+            print 'kokokooko'
+
+            #print venue
+            #Venue(json.dumps(venue)).save()
+            #venue['date'] = str(datetime.datetime.utcnow())
+            #venues.update(new_venue_id, venue, upsert=True)
+        except Exception as ex:
+            print ex
 
     return redirect('index')
 
