@@ -63,8 +63,8 @@ WSGI_APPLICATION = 'youlocal_task.wsgi.application'
 
 DATABASES = {
     'default' : {
-        'ENGINE' : 'django_mongodb_engine',
         'NAME' : 'mydb',
+        'ENGINE' : 'django_mongodb_engine',
 
         'USER': '',
         'PASSWORD': '',

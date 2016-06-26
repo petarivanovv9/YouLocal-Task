@@ -25,24 +25,19 @@ db = client.mydb
 def index(request):
     venues = __get_venues_in_radius()
     # print db.collection_names(include_system_collections=False)
-    #print db.venues.count()
-    #print db
+    print db.venues.count()
+    # print db
 
-    print len(Venue.objects.all())
+    # print len(Venue.objects.all())
 
-
-    #print Venue.objects.all()
-    #print Venue.objects.all()[0].id
-    #print Venue.objects.all()[1].id
-
-    #serializer_v = VenueSerializer(Venue.objects.all()[0])
-    #print serializer_v
+    # serializer_v = VenueSerializer(Venue.objects.all()[0])
+    # print serializer_v
 
     return render(request, 'index.html', locals())
 
 
 def save_venues(request):
-    # venues = db.venues
+    venues = db.venues
     # print(request.POST.lists())
     # print(request.POST.lists()[-1][-1])
     for i in request.POST.lists()[-1][-1]:
@@ -51,36 +46,24 @@ def save_venues(request):
             venue['_id'] = venue['id']
             new_venue_id = {'_id': venue['id']}
             del venue['id']
+            venue['date'] = str(datetime.datetime.utcnow())
+            venues.update(new_venue_id, venue, upsert=True)
 
-            #serializer_v = VenueSerializer(venue)
-            #print serializer_v
-            #serializer_v.save()
+            # print len(Venue.objects.all())
 
-            print 'hohohooh'
-            print len(Venue.objects.all())
+            # Venue.objects.create(
+            #     _id = venue['_id'],
+            #     name = venue['name'],
+            #     contact = venue['contact'],
+            #     location = venue['location'],
+            #     categories = venue['categories'],
+            #     verified = venue['verified'],
+            #     date = datetime.datetime.utcnow(),
+            # ).save(force_insert=True)
 
-            Venue.objects.create(
-                _id = venue['_id'],
-                name = venue['name'],
-                contact = venue['contact'],
-                location = venue['location'],
-                categories = venue['categories'],
-                verified = venue['verified'],
-                date = datetime.datetime.utcnow(),
-            ).save(force_insert=True)
-            # baba.save()
-
-            print len(Venue.objects.all())
-
-
-            print 'kokokooko'
-
-            #print venue
-            #Venue(json.dumps(venue)).save()
-            #venue['date'] = str(datetime.datetime.utcnow())
-            #venues.update(new_venue_id, venue, upsert=True)
-        except Exception as ex:
-            print ex
+            # print len(Venue.objects.all())
+        except Exception as exc:
+            pass
 
     return redirect('index')
 
@@ -100,8 +83,8 @@ def __get_venues_in_radius():
             distance = item['location']['distance']
             address = item['location']['address']
         except Exception as exc:
-            address = ''
             # print("There no such fields!")
+            pass
         venue = {}
         venue['id'] = id
         venue['name'] = name
@@ -110,7 +93,6 @@ def __get_venues_in_radius():
         venue['distance'] = distance
 
         formated_venues.append(venue)
-
     return formated_venues
 
 
@@ -128,8 +110,8 @@ def __get_venue_by_id(id_venue):
         categories = raw_venue['categories']
         verified = raw_venue['verified']
     except Exception as exc:
-        print("There no such fields!")
-        #address = ''
+        # print("There no such fields!")
+        pass
     # print(id + ' -- ' + name + ' -- ' + address + ' -- ' + str(distance))
     venue = {}
     venue['id'] = id
@@ -138,7 +120,6 @@ def __get_venue_by_id(id_venue):
     venue['location'] = location
     venue['categories'] = categories
     venue['verified'] = verified
-
     return venue
 
 
@@ -154,5 +135,4 @@ def get_venues_in_5km_desc(request):
     data = {
         'venues': venues,
     }
-
     return Response(data, status=status.HTTP_200_OK)

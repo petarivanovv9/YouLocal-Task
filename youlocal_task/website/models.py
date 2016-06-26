@@ -26,11 +26,12 @@ class Category(models.Model):
 
 class Venue(models.Model):
     _id = models.CharField(max_length=255, unique=True)
-    name = models.CharField(max_length=255)
+    name = models.CharField(null=True, blank=True, max_length=255)
     contact = DictField()
     location = DictField()
+    # location = EmbeddedModelField(Location)
     categories = ListField()
     verified = models.BooleanField()
     date = models.DateTimeField(auto_now_add=True)
 
-    #objects = MongoDBManager()
+    # objects = MongoDBManager()
