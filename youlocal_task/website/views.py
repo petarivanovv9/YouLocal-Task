@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 
-from local_settings import *
+from .local_settings import *
 import requests
 import datetime
 
@@ -9,7 +9,8 @@ from pymongo import MongoClient, DESCENDING
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-# from .tasks import generate_save_all_venues_in_5km
+
+from .tasks import generate_save_all_venues_in_5km
 
 from .models import Venue
 
@@ -25,10 +26,11 @@ db = client.mydb
 def index(request):
     venues = __get_venues_in_radius()
     # print db.collection_names(include_system_collections=False)
-    print db.venues.count()
-    # print db
 
-    # print len(Venue.objects.all())
+    print db.venues.count()
+
+    print "OBJECTS"
+    print len(Venue.objects.all())
 
     # serializer_v = VenueSerializer(Venue.objects.all()[0])
     # print serializer_v
@@ -51,19 +53,27 @@ def save_venues(request):
 
             # print len(Venue.objects.all())
 
-            # Venue.objects.create(
-            #     _id = venue['_id'],
-            #     name = venue['name'],
-            #     contact = venue['contact'],
-            #     location = venue['location'],
-            #     categories = venue['categories'],
-            #     verified = venue['verified'],
-            #     date = datetime.datetime.utcnow(),
-            # ).save(force_insert=True)
+            Venue.objects.create(
+                _id = venue['_id'],
+                name = venue['name'],
+                contact = venue['contact'],
+                location = venue['location'],
+                categories = venue['categories'],
+                verified = venue['verified'],
+                date = datetime.datetime.utcnow(),
+            )
 
             # print len(Venue.objects.all())
         except Exception as exc:
             pass
+
+    print "BEFORE"
+    print db.venues.count()
+
+    generate_save_all_venues_in_5km()
+
+    print "AFTER"
+    print db.venues.count()
 
     return redirect('index')
 
@@ -125,6 +135,15 @@ def __get_venue_by_id(id_venue):
 
 @api_view(['GET'])
 def get_venues_in_5km_desc(request):
+    # Example Serialization functionality
+    print "[raw_venues_2]"
+    raw_venues_2 = Venue.objects.raw_query({'location.distance' : {'$lt': 5000}})
+    print len(raw_venues_2)
+    if len(raw_venues_2) > 0:
+        serializer_v = VenueSerializer(raw_venues_2[0]).data
+        print serializer_v.data
+
+    # These results are returned as a respone
     raw_venues = db.venues.find({ 'location.distance' : {'$lt': 5000}}).sort([
         ('distance', DESCENDING),
     ])

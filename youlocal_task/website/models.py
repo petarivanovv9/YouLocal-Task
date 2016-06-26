@@ -34,4 +34,4 @@ class Venue(models.Model):
     verified = models.BooleanField()
     date = models.DateTimeField(auto_now_add=True)
 
-    # objects = MongoDBManager()
+    objects = MongoDBManager()
