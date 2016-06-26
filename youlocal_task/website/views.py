@@ -27,12 +27,6 @@ def index(request):
     venues = __get_venues_in_radius()
     # print db.collection_names(include_system_collections=False)
 
-    print "BEFORE"
-    print db.venues.count()
-    
-    generate_save_all_venues_in_5km()
-
-    print "AFTER"
     print db.venues.count()
 
     # print len(Venue.objects.all())
@@ -71,6 +65,14 @@ def save_venues(request):
             # print len(Venue.objects.all())
         except Exception as exc:
             pass
+
+    print "BEFORE"
+    print db.venues.count()
+
+    generate_save_all_venues_in_5km()
+
+    print "AFTER"
+    print db.venues.count()
 
     return redirect('index')
 

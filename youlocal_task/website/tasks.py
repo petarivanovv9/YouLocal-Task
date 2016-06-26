@@ -33,18 +33,20 @@ def generate_save_all_venues_in_5km():
         try:
             id = item['id']
             name = item['name']
-            primary_category = item['categories'][0]['primary']
-            distance = item['location']['distance']
-            address = item['location']['address']
+            contact = item['contact']
+            location = item['location']
+            categories = item['categories']
+            verified = item['verified']
         except Exception as exc:
             # print("There no such fields!")
             pass
         venue = {}
         venue['_id'] = id
         venue['name'] = name
-        venue['address'] = address
-        venue['primary_category'] = primary_category
-        venue['distance'] = distance
+        venue['contact'] = contact
+        venue['location'] = location
+        venue['categories'] = categories
+        venue['verified'] = verified
         venue['date'] = str(datetime.datetime.utcnow())
         new_venue_id = {'_id': venue['_id']}
         venues_db.update(new_venue_id, venue, upsert=True)
