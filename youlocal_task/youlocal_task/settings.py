@@ -73,6 +73,13 @@ DATABASES = {
     }
 }
 
+# Celery with RabbitMQ
+BROKER_URL = 'amqp://guest:guest@localhost:9999//'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+
+# Celery with MongoDB
 # BROKER_URL = 'mongodb://localhost:8000/mydb'
 # CELERY_RESULT_BACKEND = 'mongodb://localhost:8000'
 # CELERY_ACCEPT_CONTENT = ['application/json']

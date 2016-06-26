@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 
-from local_settings import *
+from .local_settings import *
 import requests
 import datetime
 
@@ -9,7 +9,8 @@ from pymongo import MongoClient, DESCENDING
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-# from .tasks import generate_save_all_venues_in_5km
+
+from .tasks import generate_save_all_venues_in_5km
 
 from .models import Venue
 
@@ -25,8 +26,14 @@ db = client.mydb
 def index(request):
     venues = __get_venues_in_radius()
     # print db.collection_names(include_system_collections=False)
+
+    print "BEFORE"
     print db.venues.count()
-    # print db
+    
+    generate_save_all_venues_in_5km()
+
+    print "AFTER"
+    print db.venues.count()
 
     # print len(Venue.objects.all())
 
