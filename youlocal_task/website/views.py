@@ -141,7 +141,7 @@ def get_venues_in_5km_desc(request):
     print len(raw_venues_2)
     if len(raw_venues_2) > 0:
         serializer_v = VenueSerializer(raw_venues_2[0]).data
-        print serializer_v.data
+        print serializer_v
 
     # These results are returned as a respone
     raw_venues = db.venues.find({ 'location.distance' : {'$lt': 5000}}).sort([
