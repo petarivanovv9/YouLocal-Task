@@ -29,7 +29,8 @@ def index(request):
 
     print db.venues.count()
 
-    # print len(Venue.objects.all())
+    print "OBJECTS"
+    print len(Venue.objects.all())
 
     # serializer_v = VenueSerializer(Venue.objects.all()[0])
     # print serializer_v
@@ -52,15 +53,15 @@ def save_venues(request):
 
             # print len(Venue.objects.all())
 
-            # Venue.objects.create(
-            #     _id = venue['_id'],
-            #     name = venue['name'],
-            #     contact = venue['contact'],
-            #     location = venue['location'],
-            #     categories = venue['categories'],
-            #     verified = venue['verified'],
-            #     date = datetime.datetime.utcnow(),
-            # ).save(force_insert=True)
+            Venue.objects.create(
+                _id = venue['_id'],
+                name = venue['name'],
+                contact = venue['contact'],
+                location = venue['location'],
+                categories = venue['categories'],
+                verified = venue['verified'],
+                date = datetime.datetime.utcnow(),
+            )
 
             # print len(Venue.objects.all())
         except Exception as exc:
@@ -134,6 +135,15 @@ def __get_venue_by_id(id_venue):
 
 @api_view(['GET'])
 def get_venues_in_5km_desc(request):
+    # Example Serialization functionality
+    print "[raw_venues_2]"
+    raw_venues_2 = Venue.objects.raw_query({'location.distance' : {'$lt': 5000}})
+    print len(raw_venues_2)
+    if len(raw_venues_2) > 0:
+        serializer_v = VenueSerializer(raw_venues_2[0]).data
+        print serializer_v.data
+
+    # These results are returned as a respone
     raw_venues = db.venues.find({ 'location.distance' : {'$lt': 5000}}).sort([
         ('distance', DESCENDING),
     ])
